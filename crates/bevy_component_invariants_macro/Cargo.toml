@@ -1,0 +1,18 @@
+[package]
+name = "bevy_component_invariants_macro"
+description = "The `#[variant_of]` attribute behind `bevy_component_invariants`. Not useful on its own."
+keywords = ["bevy", "ecs", "macro", "invariants", "gamedev"]
+categories = ["game-development"]
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[lib]
+proc-macro = true
+
+[dependencies]
+proc-macro2 = "1"
+quote = "1"
+syn = { version = "2", features = ["full"] }

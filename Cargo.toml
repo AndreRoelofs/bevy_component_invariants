@@ -1,0 +1,20 @@
+[workspace]
+resolver = "3"
+members = [
+    "crates/bevy_component_invariants",
+    "crates/bevy_component_invariants_macro",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+authors = ["Andre Roelofs"]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/AndreRoelofs/bevy_component_invariants"
+
+[workspace.dependencies]
+# The subcrates rather than umbrella `bevy`, so depending on this does not drag
+# in rendering, audio and the rest of the engine.
+bevy_app = "0.19"
+bevy_ecs = "0.19"
+bevy_log = "0.19"

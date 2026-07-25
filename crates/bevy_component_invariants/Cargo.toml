@@ -1,0 +1,21 @@
+[package]
+name = "bevy_component_invariants"
+description = "Mutually exclusive Bevy components: open sets of components of which an entity carries at most one, enforced by the components themselves."
+keywords = ["bevy", "ecs", "components", "invariants", "gamedev"]
+categories = ["game-development", "data-structures"]
+readme = "README.md"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+bevy_app = { workspace = true }
+bevy_ecs = { workspace = true }
+bevy_log = { workspace = true }
+bevy_component_invariants_macro = { path = "../bevy_component_invariants_macro", version = "0.1.0" }
+# Collects every `#[variant_of]` in the binary so `AxisPlugin` can fill the
+# registry before the first insert. `bevy_reflect` already pulls this in for the
+# same job on `#[derive(Reflect)]`.
+inventory = "0.3"
