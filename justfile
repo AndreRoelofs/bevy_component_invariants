@@ -8,7 +8,7 @@ check: check-rust check-docs test
 
 # Clippy across the workspace, warnings as errors.
 check-rust:
-    cargo clippy --workspace --all-targets -- -D warnings
+    scripts/clippy.sh
 
 # Docs must build without broken intra-doc links.
 check-docs:
