@@ -33,7 +33,7 @@ jobs:
       # No toolchain argument: rustup resolves the active toolchain, which is the
       # one rust-toolchain.toml pins, components included. `--allow-downgrade`
       # falls back to the most recent nightly that actually ships every pinned
-      # component, so a nightly missing e.g. the cranelift backend is not a red CI.
+      # component, so a nightly missing rustfmt or clippy is not a red CI.
       - name: Install the toolchain pinned by rust-toolchain.toml
         run: |
           rustup toolchain install --allow-downgrade
