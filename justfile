@@ -21,6 +21,7 @@ test:
 # Auto-format and apply safe lint fixes.
 fix:
     cargo fmt --all
+    scripts/clippy.sh --fix --allow-dirty
     typos --write-changes
 
 # What `cargo publish` would upload, without uploading it. The macro crate has to
