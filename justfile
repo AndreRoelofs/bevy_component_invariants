@@ -28,3 +28,7 @@ fix:
 package:
     cargo package -p bevy_component_invariants_macro --allow-dirty
     cargo package -p bevy_component_invariants --allow-dirty
+
+publish:
+    cargo publish -p bevy_component_invariants_macro
+    cargo publish -p bevy_component_invariants
