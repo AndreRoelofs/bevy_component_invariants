@@ -1,0 +1,41 @@
+version: 2
+
+updates:
+  # The actions used by .github/workflows/ci.yml. These are the pins most likely
+  # to go stale unnoticed, since nothing fails when they do — they just keep
+  # running on an old Node runtime until GitHub turns it off.
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        patterns: ["*"]
+    commit-message:
+      prefix: ci
+      include: scope
+
+  - package-ecosystem: cargo
+    directory: "/"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 15
+    # One PR a week for everything compatible; anything major still gets its own
+    # PR, because those want reading.
+    groups:
+      cargo:
+        patterns: ["*"]
+        update-types:
+          - minor
+          - patch
+    commit-message:
+      prefix: build
+      include: scope
+    ignore:
+      # This crate's version tracks Bevy's, so moving to a new Bevy is a manual,
+      # breaking release done together with the code changes it needs — never
+      # something to merge from a bot. Patch releases (0.19.x) still come through.
+      - dependency-name: bevy_*
+        update-types:
+          - version-update:semver-major
+          - version-update:semver-minor
