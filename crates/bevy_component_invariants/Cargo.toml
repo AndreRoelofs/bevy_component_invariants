@@ -14,7 +14,7 @@ repository.workspace = true
 bevy_app = { workspace = true }
 bevy_ecs = { workspace = true }
 bevy_log = { workspace = true }
-bevy_component_invariants_macro = { path = "../bevy_component_invariants_macro", version = "0.1.0" }
+bevy_component_invariants_macro = { path = "../bevy_component_invariants_macro", version = "0.19.0" }
 # Collects every `#[variant_of]` in the binary so `AxisPlugin` can fill the
 # registry before the first insert. `bevy_reflect` already pulls this in for the
 # same job on `#[derive(Reflect)]`.

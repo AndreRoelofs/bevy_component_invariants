@@ -102,7 +102,7 @@ dependencies = [
 
 [[package]]
 name = "bevy_component_invariants"
-version = "0.1.0"
+version = "0.19.0"
 dependencies = [
  "bevy_app",
  "bevy_component_invariants_macro",
@@ -113,7 +113,7 @@ dependencies = [
 
 [[package]]
 name = "bevy_component_invariants_macro"
-version = "0.1.0"
+version = "0.19.0"
 dependencies = [
  "proc-macro2",
  "quote",
