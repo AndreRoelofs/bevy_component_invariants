@@ -1,8 +1,3 @@
-//! The attribute behind [`StateAxis`](../bevy_component_invariants/trait.StateAxis.html)
-//! membership. See the `bevy_component_invariants` crate for the concept and the
-//! docs; this crate only holds the expansion, because proc-macros must live alone,
-//! and is not useful on its own.
-
 use proc_macro::TokenStream;
 use proc_macro2::TokenStream as TokenStream2;
 use quote::quote;
@@ -12,30 +7,6 @@ use syn::{
     parse_macro_input, parse_quote,
 };
 
-/// Declares a component as one variant of an exclusive axis.
-///
-/// ```ignore
-/// #[variant_of(ItemState, "on_ground")]
-/// #[derive(Component, Clone, Copy)]
-/// pub struct OnGround;
-/// ```
-///
-/// The name is optional and defaults to the type's name in snake_case, so the
-/// example above is the same as a bare `#[variant_of(ItemState)]`.
-///
-/// This must sit *above* `#[derive(Component)]`: the expansion injects the
-/// `#[component(on_insert = ...)]` hook that does the excluding, and the derive
-/// only sees attributes that are already present when it runs.
-///
-/// One attribute is deliberately the whole declaration. Being a variant and
-/// enforcing exclusivity are the same fact, so there is no way to state one
-/// without the other — `VariantOf` cannot be implemented by hand.
-///
-/// The expansion also submits the variant to the link-time collection
-/// `AxisPlugin` drains, so it is in the registry before its first insert. Generic
-/// variants are skipped there — there is no set of instantiations to collect, the
-/// same limitation `#[derive(Reflect)]` has — and fall back to registering when
-/// first inserted.
 #[proc_macro_attribute]
 pub fn variant_of(attr: TokenStream, item: TokenStream) -> TokenStream {
     let args = parse_macro_input!(attr as VariantArgs);
@@ -68,8 +39,6 @@ pub fn variant_of(attr: TokenStream, item: TokenStream) -> TokenStream {
         }
     };
 
-    // The derive collects `#[component(...)]` wherever it sits in the list, so
-    // appending is enough — the attribute does not have to precede the derive.
     item.attrs.push(parse_quote! {
         #[component(on_insert = ::bevy_component_invariants::enforce_axis::<Self>)]
     });
@@ -80,10 +49,6 @@ pub fn variant_of(attr: TokenStream, item: TokenStream) -> TokenStream {
     })
 }
 
-/// The submission that puts a variant in the registry before its first insert.
-///
-/// Empty for a generic variant: there is no set of instantiations to collect, so
-/// it keeps the first-insert fallback and the hook says so once.
 fn auto_registration(item: &ItemStruct) -> TokenStream2 {
     if !item.generics.params.is_empty() {
         return TokenStream2::new();
@@ -121,7 +86,6 @@ impl Parse for VariantArgs {
     }
 }
 
-/// `OnGround` -> `on_ground`, so the common case needs no string at all.
 fn snake_case(ident: &Ident) -> String {
     let ident = ident.to_string();
     let mut out = String::with_capacity(ident.len() + 4);
